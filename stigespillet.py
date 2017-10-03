@@ -234,7 +234,7 @@ class Cell:
 
     def has_ladder(self):
         return self.ladder
-   
+
     def to_string(self):
         to_string = "(" + str(self.index)
         to_string.ljust(4)
