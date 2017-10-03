@@ -54,6 +54,7 @@ class Game:
 
         # adds +++index on player...
         d6 = random.randint(1,6)
+        print(d6)
         input("throw")
         player.move(d6)
 
@@ -76,9 +77,11 @@ class Game:
 
     # TODO: when player moves to excactly 90 => gamover
     def is_game_over(self):
-        pass
+        if self.current_player.get_board_index() == len(self.board) - 1:
+            return True
+        return False
 
-    def game_start(self):
+    def game_run(self):
         if len(self.players) < 2:
             print("must have at least two players")
 
@@ -97,8 +100,8 @@ class Player:
 
     def __init__(self, game, player_index):
 
-        self.board_index = 0
-        self.current_cell = game.board[0]
+        self.board_index = 88
+        self.current_cell = game.board[self.board_index]
         self.current_cell.add_player_to_cell(self)
         self.player_index = player_index
         self.game = game
@@ -107,9 +110,11 @@ class Player:
 
         self.current_cell.remove_player_from_cell(self)
 
+        # passes finish or on finish
         if self.board_index + steps >= len(self.game.board):
-            
-            pass
+            steps = self.board_index + steps - (len(self.game.board) - 1)
+            self.board_index = len(self.game.board) - 1  - steps
+        # does not pass finish
         else:
             self.board_index += steps
 
@@ -120,6 +125,9 @@ class Player:
 
     def get_player_index(self):
         return self.player_index
+
+    def get_board_index(self):
+        return self.board_index
 
 class Cell:
 
@@ -162,6 +170,6 @@ def main():
 
 
     a = Game((9,10),[],2)
-    a.game_start()
+    a.game_run()
 
 main()
