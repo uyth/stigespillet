@@ -57,7 +57,6 @@ class Game:
 
         # adds +++index on player...
         d6 = random.randint(1,6)
-        d6 = 1
         print(d6)
         input("press enter to throw")
         player.move(d6)
@@ -123,6 +122,11 @@ class Player:
         else:
             self.board_index += steps
 
+        next_cell = self.game.board[self.board_index]
+
+        if next_cell.has_ladder():
+            self.board_index = next_cell.go_to()
+
         self.current_cell = self.game.board[self.board_index]
         self.current_cell.add_player_to_cell(self)
 
@@ -158,7 +162,7 @@ class Cell:
         self.ladder = True
         self.ladder_end = ladder_end
 
-    def get_ladder(self):
+    def has_ladder(self):
         return self.ladder
 
     def go_to(self):
