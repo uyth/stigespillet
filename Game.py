@@ -38,6 +38,7 @@ class Game:
 
         # add ladder to cell
         for start, end in self.ladders:
+            print("ladder", start-1, end-1)
             self.board[start-1].addLadder(end-1)
 
     def initPlayers(self, player_count):
@@ -48,14 +49,17 @@ class Game:
         self.print_board()
         print("Current player's turn: " + str(self.current_player.get_player_index()))
         self.throw_dice(self.current_player)
+        if (self.is_game_over()):
+            return
         self.next_player()
 
     def throw_dice(self, player):
 
         # adds +++index on player...
         d6 = random.randint(1,6)
+        d6 = 1
         print(d6)
-        input("throw")
+        input("press enter to throw")
         player.move(d6)
 
     def print_board(self):
@@ -75,7 +79,6 @@ class Game:
         print(player_state)
 
 
-    # TODO: when player moves to excactly 90 => gamover
     def is_game_over(self):
         if self.current_player.get_board_index() == len(self.board) - 1:
             return True
@@ -87,6 +90,8 @@ class Game:
 
         while not self.is_game_over():
             self.next_turn()
+
+        print("Hurray! Player " + str(self.current_player.get_player_index()) + " won!")
 
 
     def next_player(self):
@@ -100,7 +105,7 @@ class Player:
 
     def __init__(self, game, player_index):
 
-        self.board_index = 88
+        self.board_index = 0
         self.current_cell = game.board[self.board_index]
         self.current_cell.add_player_to_cell(self)
         self.player_index = player_index
@@ -160,16 +165,23 @@ class Cell:
         return self.ladder_end
 
     def to_string(self):
-        to_string = str(self.index)
+        to_string = "(" + str(self.index)
+        to_string.ljust(4)
+        if self.ladder == True:
+            to_string += " " + str(self.ladder_end)
+        to_string = to_string.ljust(6)
+        to_string += ")"
+
         if not self.players == []:
             for player in self.players:
                 to_string += " " + str(player.get_player_index())
-        return to_string.ljust(10)
+        return to_string.ljust(15)
 
 def main():
 
+    ladders = [(3,17), (8,10), (15,44), (22,5), (39,56), (49,75), (62,45), (64,19), (65,73), (80,12), (87,79)]
 
-    a = Game((9,10),[],2)
+    a = Game((9,10), ladders, 2)
     a.game_run()
 
 main()
