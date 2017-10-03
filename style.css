@@ -28,80 +28,88 @@ header {
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
     .cell {
+        margin: 2px;
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
     }
 
-    .cell.row-0 {
+    .row-0 {
         grid-row: 1/2;
     }
+
+
+    .row-1 {
+            grid-row: 2/3;
+        }
     
-    .cell.row-1 {
-        grid-row: 2/3;
-    }
-    
-    .cell.row-2 {
+    .row-2 {
         grid-row: 3/4;
     }
-    .cell.row-3 {
+    .row-3 {
         grid-row: 4/5;
     }
     
-    .cell.row-4 {
+    .row-4 {
         grid-row: 5/6;
     }
     
-    .cell.row-5 {
+    .row-5 {
         grid-row: 6/7;
     }
-    .cell.row-6 {
+    .row-6 {
         grid-row: 7/8;
     }
     
-    .cell.row-7 {
+    .row-7 {
         grid-row: 8/9;
     }
     
-    .cell.row-8 {
+    .row-8 {
         grid-row: 9/10
     }
 
+    .row-9 {
+        grid-row: 10/11;
+    }
 
-    .cell.col-0 {
+
+    .col-0 {
         grid-column: 1/2;
     }
 
-    .cell.col-1 {
+    .col-1 {
         grid-column: 2/3;
     }
 
-    .cell.col-2 {
+    .col-2 {
         grid-column: 3/4;
     }
-    .cell.col-3 {
+    .col-3 {
         grid-column: 4/5;
     }
 
-    .cell.col-4 {
+    .col-4 {
         grid-column: 5/6;
     }
 
-    .cell.col-5 {
+    .col-5 {
         grid-column: 6/7;
     }
-    .cell.col-6 {
+    .col-6 {
         grid-column: 7/8;
     }
 
-    .cell.col-7 {
+    .col-7 {
         grid-column: 8/9;
     }
 
-    .cell.col-8 {
+    .col-8 {
         grid-column: 9/10
     }
 
-    .cell.col-9 {
+    .col-9 {
         grid-column: 10/11
     }
 
@@ -112,22 +120,29 @@ header {
     align-items: center;
     width: 20px;
     height: 20px;
+    z-index: 2;
 }
 
 
-#controls {
+#sidebar {
     /* parent */
     grid-row: 2/3;
     grid-column: 3/4;
     display: flex;
 
     /* child */
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
 }
 
+input {
+    width: 100px;
+}
+
 /* STYLE */
+
+/* https://color.adobe.com/Vintage-Card-color-theme-9941769/ */
 h1, h2, h3 {
     font-family: 'Roboto Condensed', sans-serif;
 }
@@ -136,21 +151,29 @@ h1, h2, h3 {
     font-family: 'Nunito Sans', sans-serif;
 }
 header {
-    background: green;
+    color: #8CBEB2;
+}
+
+body {
+    background: #F2EBBF;
 }
 
 #board {
-    background: black;
+    background: #F3B562;
 }
 
-#controls {
-
-    background: pink;
+#sidebar {
+    color: #F2EBBF;
+    background: #F3B562;
 }
 
+#sidebar .highlight {
+    color: #8CBEB2;
+}
 .cell {
-    background: yellow;
-    border: solid 5px red;
+    background: #F06060;
+    color: #F2EBBF;
+    font-weight: bold;
 }
 
 .player {
@@ -161,4 +184,14 @@ header {
 
 .player.active {
     border: solid 2px blue;
+}
+
+button {
+    padding:0; margin: 0;
+    padding: 10px;
+    background: #F2EBBF;
+    border: 0;
+    color: #F06060;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
 }
