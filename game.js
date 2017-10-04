@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     var game = {
         board: [],
+        ladders: [[3,17], [8,10], [15,44], [22,5], [39,56], [49,75], [62,45], [64,19], [65,73], [80,12], [87,79]],
         currentPlayer: 0,
         dice: 0,
         gameOver: false,
@@ -25,6 +26,13 @@ $(document).ready(function() {
                     var col = cell.css("grid-column").split("/")[0];
                     game.board.push(new Cell(i, row, col));
                 }
+                game.ladders.forEach(function(ladder, index, array) {
+                    var cell = game.board[ladder[0]];
+                    cell.endOfLadder = ladder[1]-1;
+                    cell.ladder = true;
+                });
+                console.log(game.board);
+
             },
             initPlayers: function e() {
                 game.players = [];
@@ -67,9 +75,6 @@ $(document).ready(function() {
             }
             game.updateView();
         },
-        ladders: [(3,17), (8,10), (15,44), (22,5),
-            (39,56), (49,75), (62,45), (64,19),
-            (65,73), (80,12), (87,79)],
         movePlayer: function e() {
             var player = game.players[game.currentPlayer];
             console.log(player);
@@ -89,7 +94,8 @@ $(document).ready(function() {
             player.currentCell = game.board[indexBoard];
             //  if ladder on cell go to end-of-ladder-cell
             if (player.currentCell.ladder) {
-                //player.currentCell.
+                indexBoard = player.currentCell.endOfLadder;
+                player.currentCell = game.board[indexBoard];
             }
 
             player.currentCell.players.add(player);
@@ -103,6 +109,7 @@ $(document).ready(function() {
         this.col = col;
         this.ladder = false;
         this.players = new Set();
+        this.endOfLadder = null;
     };
 
     // init Player
