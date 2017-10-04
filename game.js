@@ -6,6 +6,17 @@ $(document).ready(function() {
     var status = $('#status');
     var currentPlayerLabel = $('#currentPlayer');
 
+
+    var sheet = $("#sheet svg");
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.lineWidth = 10;
+
+    function getCellPosition(index) {
+        var cell = $("#index-" + index);
+        return [Math.floor(cell.position().top), Math.floor(cell.position().left)];
+    }
+
     var game = {
         board: [],
         ladders: [[3,17], [8,10], [15,44], [22,5], [39,56], [49,75], [62,45], [64,19], [65,73], [80,12], [87,79]],
@@ -28,11 +39,41 @@ $(document).ready(function() {
                     game.board.push(new Cell(i, row, col));
                 }
                 game.ladders.forEach(function(ladder, index, array) {
+                    // set ladder
                     var cell = game.board[ladder[0]];
                     cell.endOfLadder = ladder[1]-1;
                     cell.ladder = true;
+
+                    // draw ladder
+                    var startY = getCellPosition(cell.index)[0],
+                        startX = getCellPosition(cell.index)[1];
+                    var endY = getCellPosition(cell.endOfLadder)[0],
+                        endX = getCellPosition(cell.endOfLadder)[1];
+/*
+                    console.log('from ',startX,startY,' to ',endX, endY);
+
+                    if (cell.index > cell.endOfLadder) {
+                        ctx.fillStyle = "#FF0000";
+                    } else {
+                        ctx.fillStyle = "#00FF00";
+                    }
+
+                    ctx.beginPath();
+
+                    ctx.moveTo(startX,startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+                    ctx.closePath()
+  */
+                    // if index bigger => red ladder
+                    if (cell.index > cell.endOfLadder) {
+                        var color = "rgb(0,0,0)";
+                    } else {
+                        var color = "rgb(0,255,0)";
+                    }
+                    sheet.append("<line x1='" + startX + "' y1='" + startY + "' x2='" + endX + "' style='stroke:" + color + ";stroke-width:2' />");
+
                 });
-                console.log(game.board);
 
             },
             initPlayers: function e() {
@@ -45,7 +86,6 @@ $(document).ready(function() {
                 }
                 game.updateView();
             },
-
         // updates all views
         updateView: function e() {
 
