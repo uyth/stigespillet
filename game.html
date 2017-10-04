@@ -12,22 +12,15 @@
             <h1>STIGESPILLET</h1>
         </header>
         <div id="sidebar">
-                <div id="rules">
-
-                    <h3><span class="highlight">Player turn:</span> <span id="currentPlayer">1</span></h3>
-                    <h3><span class="highlight">Dice:</span> <span id="dice"></span></h3>
-                    <div>
-                        <button id="buttonDice" class="highlight">Throw dice</button>
-                    </div>
-
-                </div>
-                <div>
-                    <h4>New game with</h4>
-                    <input type="number" name="playerInput" id="playerInput" min="2" max="4" value="2">
-                    <h4>players</h4>
-                    <button id="buttonReset" class="highlight">New game</button>
-                    <br>
-                </div>
+            <h1 class="col-1 row-1"><span id="status" class="highlight">Game started!</span></h1>
+            <h3 class="col-1 row-2"><span class="highlight">Player turn:</span> <span id="currentPlayer">1</span></h3>
+            <button id="buttonDice" class="highlight col-1 row-4">Throw dice</button>
+            <div class="col-1 row-5">
+                <h4>New game with</h4>
+                <input type="number" name="playerInput" id="playerInput" min="2" max="4" value="2">
+                <h4>players</h4>
+            </div>
+            <button  class="col-1 row-6" id="buttonReset" class="highlight">New game</button>
         </div>
         <div id="board">
             <div id="player-0" class="player">1</div>

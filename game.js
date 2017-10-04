@@ -3,6 +3,8 @@ $(document).ready(function() {
     var buttonDice = $('#buttonDice');
     var buttonReset = $('#buttonReset');
     var playerCount = $('input[name="playerInput"]').val();
+    var status = $('#status');
+    var currentPlayerLabel = $('#currentPlayer');
 
     var game = {
         board: [],
@@ -21,7 +23,6 @@ $(document).ready(function() {
                 // add all cells to board
                 for (var i = 0; i < 90; i++) {
                     var cell = $("#index-" + i);
-                    cell.css("border", "3px solid black");
                     var row = cell.css("grid-row").split("/")[0];
                     var col = cell.css("grid-column").split("/")[0];
                     game.board.push(new Cell(i, row, col));
@@ -47,8 +48,8 @@ $(document).ready(function() {
 
         // updates all views
         updateView: function e() {
-            document.getElementById("dice").innerHTML = '' + game.dice;
-            document.getElementById("currentPlayer").innerHTML = '' + (game.currentPlayer + 1);
+
+            currentPlayerLabel.html(game.currentPlayer + 1);
             game.updatePlayerPosition();
         },
             updatePlayerPosition: function e() {
@@ -60,13 +61,16 @@ $(document).ready(function() {
             },
 
         rollDice: function e() {
+            if (game.gameOver) {
+                status.html("Player: " + (game.currentPlayer+1) + " won!");
+            }
             if (!game.gameOver) {
                 // roll a dice between 1 and 6
                 game.dice = Math.floor(Math.random()*(7 - 1) + 1);
                 game.updateView();
                 game.movePlayer();
-                if (game.gameOver) {
-                    console.log("YOU WON");
+                if (game.dice !== 0) {
+                    status.html("Player " + (game.currentPlayer + 1) + " throws " + game.dice);
                 }
                 game.nextTurn();
             }
