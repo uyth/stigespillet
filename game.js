@@ -16,7 +16,8 @@ $(document).ready(function() {
 */
     function getCellPosition(index) {
         var cell = $("#index-" + index);
-        return [Math.floor(cell.offset().top-boardElement.offset().top), Math.floor(cell.offset().left - boardElement.offset().left)];
+        
+        return [Math.floor(cell.offset().top - boardElement.offset().top), Math.floor(cell.offset().left - boardElement.offset().left)];
     }
 
     var game = {
@@ -33,6 +34,7 @@ $(document).ready(function() {
           game.initPlayers();
         },
             initBoard: function e() {
+                game.gameOver = false;
                 // add all cells to board
                 for (var i = 0; i < 90; i++) {
                     var cell = $("#index-" + i);
@@ -42,7 +44,7 @@ $(document).ready(function() {
                 }
                 game.ladders.forEach(function(ladder, index, array) {
                     // set ladder
-                    var cell = game.board[ladder[0]];
+                    var cell = game.board[ladder[0]-1];
                     cell.endOfLadder = ladder[1]-1;
                     cell.ladder = true;
 
@@ -69,7 +71,7 @@ $(document).ready(function() {
   */
                     // if index bigger => red ladder
                     if (cell.index > cell.endOfLadder) {
-                        var color = "rgb(0,0,0)";
+                        var color = "rgb(128,0,128)";
                     } else {
                         var color = "rgb(0,255,0)";
                     }
