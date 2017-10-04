@@ -5,16 +5,18 @@ $(document).ready(function() {
     var playerCount = $('input[name="playerInput"]').val();
     var status = $('#status');
     var currentPlayerLabel = $('#currentPlayer');
+    var boardElement = $("#board");
 
 
-    var sheet = $("#sheet svg");
+    var sheet = $("#sheet");
+    /*
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     ctx.lineWidth = 10;
-
+*/
     function getCellPosition(index) {
         var cell = $("#index-" + index);
-        return [Math.floor(cell.position().top), Math.floor(cell.position().left)];
+        return [Math.floor(cell.offset().top-boardElement.offset().top), Math.floor(cell.offset().left - boardElement.offset().left)];
     }
 
     var game = {
@@ -71,7 +73,7 @@ $(document).ready(function() {
                     } else {
                         var color = "rgb(0,255,0)";
                     }
-                    sheet.append("<line x1='" + startX + "' y1='" + startY + "' x2='" + endX + "' style='stroke:" + color + ";stroke-width:2' />");
+                    sheet.append("<line x1='" + startX + "' y1='" + startY + "' x2='" + endX + "' y2='" + endY + "' style='stroke:" + color + ";stroke-width:2' />");
 
                 });
 
@@ -101,9 +103,7 @@ $(document).ready(function() {
             },
 
         rollDice: function e() {
-            if (game.gameOver) {
-                status.html("Player: " + (game.currentPlayer+1) + " won!");
-            }
+
             if (!game.gameOver) {
                 // roll a dice between 1 and 6
                 game.dice = Math.floor(Math.random()*(7 - 1) + 1);
@@ -111,6 +111,9 @@ $(document).ready(function() {
                 game.movePlayer();
                 if (game.dice !== 0) {
                     status.html("Player " + (game.currentPlayer + 1) + " throws " + game.dice);
+                }
+                if (game.gameOver) {
+                    status.html("Player: " + (game.currentPlayer+1) + " won!");
                 }
                 game.nextTurn();
             }

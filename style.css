@@ -109,11 +109,9 @@ header {
         grid-column: 9/10!important;
     }
 
-#myCanvas, #sheet {
-    grid-row: 1/11;
-    grid-column: 1/10;
-    height: 100%;
-    width: 100%;
+#sheet {
+    grid-row: 2/3;
+    grid-column: 2/3;
     z-index: 2;
 }
 
