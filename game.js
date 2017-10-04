@@ -60,12 +60,16 @@ $(document).ready(function() {
             },
 
         rollDice: function e() {
-            // roll a dice between 1 and 6
-            game.dice = Math.floor(Math.random()*(7 - 1) + 1);
-            game.updateView();
-            game.movePlayer();
-            //if ()
-            game.nextTurn();
+            if (!game.gameOver) {
+                // roll a dice between 1 and 6
+                game.dice = Math.floor(Math.random()*(7 - 1) + 1);
+                game.updateView();
+                game.movePlayer();
+                if (game.gameOver) {
+                    console.log("YOU WON");
+                }
+                game.nextTurn();
+            }
         },
         nextTurn: function e() {
             if (game.currentPlayer + 1 >= playerCount) {
@@ -74,6 +78,7 @@ $(document).ready(function() {
                 game.currentPlayer++;
             }
             game.updateView();
+
         },
         movePlayer: function e() {
             var player = game.players[game.currentPlayer];
@@ -96,6 +101,10 @@ $(document).ready(function() {
             if (player.currentCell.ladder) {
                 indexBoard = player.currentCell.endOfLadder;
                 player.currentCell = game.board[indexBoard];
+            }
+
+            if (player.currentCell.index == 89) {
+                game.gameOver = true;
             }
 
             player.currentCell.players.add(player);
